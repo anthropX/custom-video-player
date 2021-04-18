@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Custom Video Player</title>
+  <script src="https://kit.fontawesome.com/03de6fac72.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/vue@next" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body @key.space>
+  <div id="player">
+
+    <!-- Video -->
+    <video src="duneBashing.mp4" 
+    id="video"
+    poster="poster.png"
+    @click="toggleVideoPlaying"
+    @timeupdate="updateRangeValue"
+    ref="video"
+    loop
+    :style="hasBegun ? videoStyle : {}"
+    >
+      You'll need to update your browser to view this video
+    </video>
+
+    <div id="videoOverlay" :style="hasBegun ? {display: 'none'} : {}" @click="toggleVideoPlaying">
+      <i class="fas fa-play"></i>
+    </div>
+
+    <!-- Controls -->
+    <div v-if="hasBegun" id="video-controls" ref="controls" :style="controlsStyle">
+
+      <!-- Seekbar -->
+      <input type="range" name="seekValue" id="seekbar" min="0" max="100" step="1" value="0" @change="setVideoSeek" ref="seekbar">
+
+      <!-- Buttons -->
+      <div class="btn-wrapper">
+        <!-- Play -->
+        <button v-if="!isPlaying" id="play" class="btn" @click="toggleVideoPlaying">
+          <i class="fas fa-play fa-lg"></i>
+        </button>
+
+        <!-- Pause -->
+        <button v-if="isPlaying" id="pause" class="btn"  @click="toggleVideoPlaying">
+          <i class="fas fa-pause fa-lg"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
